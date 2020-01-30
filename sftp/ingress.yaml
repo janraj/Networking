@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sftp-ingress
+  annotations:
+   kubernetes.io/ingress.class: "sftp"
+   ingress.citrix.com/frontend-ip: "" #IP address to be exposed for external access.
+   ingress.citrix.com/insecure-port: "22"
+   ingress.citrix.com/insecure-service-type: "tcp"
+   ingress.citrix.com/monitor: '{"sftp":{"type":"USER", "scriptname":"sftp.pl"}}'
+spec:
+  backend:
+     serviceName: sftp
+     servicePort: 22
