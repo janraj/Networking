@@ -1,4 +1,6 @@
-# Deploy your sftp application first on kubernetes
-# Use Citrix Ingress controller for exposing the application to externally 
-	## Use following settings in ingress yaml to get your application to be exposed to outside world.
-           ### 
+# Deploy your sftp application on kubernetes
+  In this section,
+	## 1.  Deploy a sftp micro service on a kubernetes cluster  
+	## 2.  Deploy Citrix CPX as Ingress Device 
+	## 3.  Access the sftp application from putty.
+	## 4.  Verify using CPX stats.
