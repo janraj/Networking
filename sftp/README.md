@@ -12,6 +12,7 @@ Secure File Transfer Protocol (SSH File Transfer Protocol) is a network protocol
 2. Using Citrix VPX as Ingress Device 
 3. Access the sftp application.
 4. Verify using VPX stats.
+5. Why Citrix ADC is better choice for exposing the SFTP service ?
 
 ## Deploy sftp micro service on a kubernetes cluster
 As a first setp we are dploying the SFTP micro service on kubernetes. Please refer [here](/sftp.yaml) to see the SFTP application yaml.
@@ -25,7 +26,19 @@ Here one point we have to be carefull is the starting location in the SFTP conta
 ### Deploy the SFTP yaml
  Download the sftp yaml and set your username, password and volume location and deploy using kubectl command as follows.
 ### Verify sftp service is running
+Please verify the service is running fine by using ``` kubectl get pods -n sftp```
 ![](./images/SftpService.png)
+
+## Use Citrix VPX to expose the SFTP service
+   Set up your VPX 
+   Deploy an ingress file your sftp service 
+
+## Access the SFTP application 
+   Use any of the following to connect to sftp application.
+## Verify using VPX stats
+
+## Why Citrix ADC is better choice for exposing the SFTP service.
+   It uses a user monitor and probes where the sftp service is avaialbel by pulling the files mentioned in the monitor.
 
 
   
