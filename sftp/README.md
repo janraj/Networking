@@ -20,11 +20,14 @@ Secure File Transfer Protocol (SSH File Transfer Protocol) is a network protocol
 ## Deploy sftp micro service on a kubernetes cluster
 
 As a first setp we are dploying the SFTP micro service on kubernetes. Please refer [here](/sftp.yaml) to see the SFTP application yaml.
+
 ### Understand the SFTP Yaml
+ 
+SFTP yaml contains service and deployment kinds which runs on namespace called ```sftp```. Service is exposed on port 22. Deployment section contains an arg field which is used for setting up username and password. 
 
-#### Seeting user and password.
+#### Creating user and password.
 
-In thsi example we have used args field for setting the username and password. We can even securly set password for SFTP container by using env PASSWORD.
+In this example, we have used ```args``` field for setting the username and password. We can even securly set password for SFTP container by using ```env PASSWORD```.
 
 #### Volume Mount
 
@@ -35,8 +38,11 @@ Here one point we have to be carefull is the starting location in the SFTP conta
 ### Deploy the SFTP yaml
 
  Download the sftp yaml and set your username, password and volume location and deploy using kubectl command as follows.
+
 ### Verify sftp service is running
+
 Please verify the service is running fine by using ``` kubectl get pods -n sftp```
+
 ![](./images/SftpService.png)
 
 ## Use Citrix VPX to expose the SFTP service
