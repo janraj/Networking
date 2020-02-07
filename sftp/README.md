@@ -46,20 +46,57 @@ In this example, highlighed with yellow under host path refers to the volume in 
 
 5. Verify sftp service is running
 
-Please verify the service is running fine by using ``` kubectl get pods -n sftp```
+   ``` 
+      kubectl get pods -n sftp
+   ```
+   ```
+    ![](./images/SftpService.png)
+   ```
 
-![](./images/SftpService.png)
+## Use Citrix ADC to expose the SFTP service
 
+Now your sftp micro service is up and running. Next step is to expose this application for users. 
+Citrix ADC is being used here to route the traffic to the SFTP service.
 
-## Use Citrix VPX to expose the SFTP service
-
-   Set up your VPX 
-   Deploy an ingress file your sftp service 
-
+1. Create an ingress for the sftp application.
+   1. Download the ingress yaml using following command.
+      ```
+       wget https://raw.githubusercontent.com/janraj/Networking/master/sftp/ingress.yaml
+      ```
+   2. Citrix Ingress controller uses following annotations to configure the Citrix ADC.
+      ![](./images/Ingress.png)
+      Set the ```ingress.citrix.com/frontend-ip``` with the IP which you want to use for exposing SFTP service.
+      Set the username, password and file name on ```ingress.citrix.com/monitor```.
+   
+   3. Deploy the update ingress using following command.
+      ```
+      kubectl create -f ingress.yaml -n sftp
+      ```
+2. Deploy Citrix Ingress controller to configure the Citrix ADC.
+     1. Download the citrix ingress controller using
+        ```
+          wget https://raw.githubusercontent.com/citrix/citrix-k8s-ingress-controller/master/deployment/baremetal/citrix-k8s-ingress-controller.yaml
+        ```
+     2. Update the enviornment variable follow these [steps](https://github.com/citrix/citrix-k8s-ingress-controller/tree/master/deployment/baremetal).
+     3. Update the ingress class for Citrix Ingress controller with ```sftp``` which is being used in ingress. 
+     4. Deploy the Citrix ingress controller using
+        ```
+         kubectl create -f citrix-k8s-ingress-controller.yaml -n sftp
+        ```
+3. Verify configurations has been created on VPX.
+Login to Citrix ADC and check following configurations are created for SFTP applications or not.
+   1. Check CS vserver configuration.
+      ![](./images/csvserver.png)
+   2. Check LB vserver configuration.
+      ![](./images/lbvserver.png)
+   3. Check Servicegroup configuration.
+      ![](./images/servicegroup.png)
+   4. Check Monitor configuration.   
+      ![](./images/monitor.png)
+    
 ## Access the SFTP application 
 
    Use any of the following to connect to sftp application.
-## Verify using VPX stats
 
 ## Why Citrix ADC is better choice for exposing the SFTP service.
 
