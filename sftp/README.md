@@ -19,31 +19,37 @@ Secure File Transfer Protocol (SSH File Transfer Protocol) is a network protocol
 
 ## Deploy sftp micro service on a kubernetes cluster
 
-As a first setp we are dploying the SFTP micro service on kubernetes. Please refer [here](/sftp.yaml) to see the SFTP application yaml.
-
-### Understand the SFTP Yaml
- 
-SFTP yaml contains service and deployment kinds which runs on namespace called ```sftp```. Service is exposed on port 22. Deployment section contains an arg field which is used for setting up username and password. 
-
-#### Creating user and password.
-
-In this example, we have used ```args``` field for setting the username and password. We can even securly set password for SFTP container by using ```env PASSWORD```.
-
-#### Volume Mount
+As a first setp we are going to dploy the SFTP micro service on kubernetes. Please refer [here](/sftp.yaml) to see the SFTP application yaml.
+SFTP yaml contains service and deployment kinds which runs on namespace called ```sftp```. Service is exposed on port 22. Deployment section contains an ```arg``` field which is used for setting up username and password. We can even securly set password for SFTP container by using ```env PASSWORD```.
 
 ![](./images/VolumeMount.png)
-In this example highlighed with yellow under host path refers to the volume in your host machine. Highlighed with red refers to the path in the SFTP container.
-Here one point we have to be carefull is the starting location in the SFTP container. In this example mount starts with /home/admin. The user created using args field always kept in home folder of the conatiner. the next field indicate user name.In this case sample user name is being used here is admin hence the volume mount location starts with /home/admin. If user name abc, your mount location starts with /home/abc/.
 
-### Deploy the SFTP yaml
+In this example, highlighed with yellow under host path refers to the volume in your host machine. Highlighed with red refers to the path in the SFTP container. We have to mount host volume to container ```/home/<username>``` location. In this example, in conatiner we use ```/home/admin``` as mount folder because we are using admin as username. 
 
- Download the sftp yaml and set your username, password and volume location and deploy using kubectl command as follows.
 
-### Verify sftp service is running
+1. Download the sftp yaml using below command.
+   ```
+     wget https://raw.githubusercontent.com/janraj/Networking/master/sftp/sftp.yaml
+   ```
+2. Set username and password.
+
+3. Update directory according to your needs for sharing with SFTP server.
+
+4. Create namespace called ```sftp``` using below command.
+   ```
+      kubectl create namespace sftp
+   ```
+4. Deploy the SFTP service.
+   ```
+     kubectl create -f sftp.yaml -n sftp
+   ```
+
+5. Verify sftp service is running
 
 Please verify the service is running fine by using ``` kubectl get pods -n sftp```
 
 ![](./images/SftpService.png)
+
 
 ## Use Citrix VPX to expose the SFTP service
 
