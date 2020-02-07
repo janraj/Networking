@@ -113,7 +113,7 @@ Once  its connected, we can transfer files between local host and server.
 
 ## Why Citrix ADC is better choice for exposing the SFTP service.
 
-1. Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided [here] (https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md).
+1. Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided [here](https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md).
 2. Citrix ADC allows to distribute the traffic to right pod in the right Node which reduces the latency compared to other ADC.
 3. Citrix ADC allows to reach to the service IP (pod) irespective of which subnet your cluster and Citrix ADC runs. refer [here](https://github.com/citrix/citrix-k8s-node-controller)  
 
