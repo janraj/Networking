@@ -14,8 +14,7 @@ Secure File Transfer Protocol (SSH File Transfer Protocol) is a network protocol
 1. Deploy a SFTP service on a kubernetes cluster  
 2. Citrix ADC as Ingress Device 
 3. Access the sftp application.
-4. Verify using VPX stats.
-5. Why Citrix ADC is better choice for exposing the SFTP service ?
+4. Why Citrix ADC is better choice for exposing the SFTP service ?
 
 ## **Deploy SFTP micro service**
 
@@ -59,7 +58,7 @@ Now your SFTP service is up and running. Next step is to expose this application
 Citrix ADC is being used here to route the traffic to the SFTP service.
 
 1. Create an ingress for the sftp application.
-   1. Download the ingress yaml using following command.
+   1. Download the ingress yaml.
       ```
        wget https://raw.githubusercontent.com/janraj/Networking/master/sftp/ingress.yaml
       ```
@@ -68,7 +67,7 @@ Citrix ADC is being used here to route the traffic to the SFTP service.
       Set the ```ingress.citrix.com/frontend-ip``` with the IP which you want to use for exposing SFTP service.
       Set the username, password and file name on ```ingress.citrix.com/monitor```.
    
-   3. Deploy the update ingress using following command.
+   3. Deploy the updated ingress.
       ```
       kubectl create -f ingress.yaml -n sftp
       ```
@@ -83,8 +82,10 @@ Citrix ADC is being used here to route the traffic to the SFTP service.
         ```
          kubectl create -f citrix-k8s-ingress-controller.yaml -n sftp
         ```
-4. Verify configurations has been created on VPX.
+4. Verify configurations has been created on Citrix ADC.
+   
 Login to Citrix ADC and check following configurations are created for SFTP applications or not.
+   
    1. Check CS vserver configuration.
 
       ![](./images/csvserver.png)
@@ -102,7 +103,7 @@ Login to Citrix ADC and check following configurations are created for SFTP appl
       ![](./images/monitor.png)
 
   
-## Access the SFTP application 
+## **Access the SFTP application** 
 
 Access the sftp application using the csvserver IP used in the ADC configuration. We can use curl, FileZilla or any such tools.
    
@@ -111,7 +112,7 @@ Access the sftp application using the csvserver IP used in the ADC configuration
 Once  its connected, we can transfer files between local host and server.
    
 
-## Why Citrix ADC is better choice for exposing the SFTP service.
+## **Why Citrix ADC is better choice for exposing the SFTP service.**
 
 1. Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided [here](https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md).
 2. Citrix ADC allows to distribute the traffic to right pod in the right Node which reduces the latency compared to other ADC.
