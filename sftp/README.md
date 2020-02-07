@@ -1,23 +1,23 @@
-# SFTP Micro Service on Kubernetes 
+# **SFTP Micro Service on Kubernetes** 
 
 Secure File Transfer Protocol (SSH File Transfer Protocol) is a network protocol that provides file access, file transfer, and file management over any reliable data stream.Compared to the SCP protocol, which only allows file transfers, the SFTP protocol allows for a range of operations on remote files which make it more like a remote file system protocol. An SFTP client's extra capabilities include resuming interrupted transfers, directory listings, and remote file removal.
 
-## Who should read this?
+## **Who should read this?**
 
 1. If you want to setup  an SFTP server on a kubernetes and want to expose for pulling the logs or stats of other application logs/data.
-2. If you want to see which external load balncer best fit for your sftp application for your kubernetes enviornment.
+2. If you want to see which external load balncer best fit for your SFTP application for your kubernetes enviornment.
 3. If you want to use SFTP micro service to run on your kubernetes.
-4. If you dont know how to setup and share volume mount to your sftp server.
+4. If you dont know how to setup and share volume mount to your SFTP server.
  
-## This Section contains
+## **This Section contains**
 
-1. Deploy a sftp micro service on a kubernetes cluster  
-2. Using Citrix VPX as Ingress Device 
+1. Deploy a SFTP service on a kubernetes cluster  
+2. Citrix ADC as Ingress Device 
 3. Access the sftp application.
 4. Verify using VPX stats.
 5. Why Citrix ADC is better choice for exposing the SFTP service ?
 
-## Deploy sftp micro service on a kubernetes cluster
+## **Deploy SFTP micro service**
 
 As a first setp we are going to dploy the SFTP micro service on kubernetes. Please refer [here](/sftp.yaml) to see the SFTP application yaml.
 SFTP yaml contains service and deployment kinds which runs on namespace called ```sftp```. Service is exposed on port 22. Deployment section contains an ```arg``` field which is used for setting up username and password. We can even securly set password for SFTP container by using ```env PASSWORD```.
@@ -53,9 +53,9 @@ In this example, highlighed with yellow under host path refers to the volume in 
    ![](./images/SftpService.png)
   
 
-## Use Citrix ADC to expose the SFTP service
+## **Citrix ADC to route the traffic to SFTP service**
 
-Now your sftp micro service is up and running. Next step is to expose this application for users. 
+Now your SFTP service is up and running. Next step is to expose this application for users. 
 Citrix ADC is being used here to route the traffic to the SFTP service.
 
 1. Create an ingress for the sftp application.
@@ -83,7 +83,7 @@ Citrix ADC is being used here to route the traffic to the SFTP service.
         ```
          kubectl create -f citrix-k8s-ingress-controller.yaml -n sftp
         ```
-3. Verify configurations has been created on VPX.
+4. Verify configurations has been created on VPX.
 Login to Citrix ADC and check following configurations are created for SFTP applications or not.
    1. Check CS vserver configuration.
 
@@ -100,7 +100,8 @@ Login to Citrix ADC and check following configurations are created for SFTP appl
    4. Check Monitor configuration.   
 
       ![](./images/monitor.png)
-    
+
+  
 ## Access the SFTP application 
 
 Access the sftp application using the csvserver IP used in the ADC configuration. We can use curl, FileZilla or any such tools.
@@ -112,8 +113,9 @@ Once  its connected, we can transfer files between local host and server.
 
 ## Why Citrix ADC is better choice for exposing the SFTP service.
 
-   Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided [here] (https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md).
- 
+1. Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided [here] (https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md).
+2. Citrix ADC allows to distribute the traffic to right pod in the right Node which reduces the latency compared to other ADC.
+3. Citrix ADC allows to reach to the service IP (pod) irespective of which subnet your cluster and Citrix ADC runs. refer [here](https://github.com/citrix/citrix-k8s-node-controller)  
 
 
   
