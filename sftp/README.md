@@ -84,7 +84,6 @@ Citrix ADC is being used here to route the traffic to the SFTP service.
         ```
 4. Verify configurations has been created on Citrix ADC.
    
-      Login to Citrix ADC and check following configurations are created for SFTP applications or not.
    
    1. Check CS vserver configuration.
 
