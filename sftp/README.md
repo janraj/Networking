@@ -103,7 +103,7 @@ Login to Citrix ADC and check following configurations are created for SFTP appl
     
 ## Access the SFTP application 
 
-Access the sftp application using the csvserver IP used in the ADC configuration. We can use curl, or FileZilla or any tools like that.
+Access the sftp application using the csvserver IP used in the ADC configuration. We can use curl, FileZilla or any such tools.
    
 ![](./images/SFTP_Connection.png)
 
@@ -112,7 +112,7 @@ Once  its connected, we can transfer files between local host and server.
 
 ## Why Citrix ADC is better choice for exposing the SFTP service.
 
-   Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided here [https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md].
+   Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided [here] (https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md).
  
 
 
