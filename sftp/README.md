@@ -4,26 +4,26 @@ Secure File Transfer Protocol (SSH File Transfer Protocol) is a network protocol
 
 ## **Who should read this?**
 
-1. If you want to setup  an SFTP server on a kubernetes and want to expose for pulling the logs or stats of other application logs/data.
-2. If you want to see which external load balncer best fit for your SFTP application for your kubernetes enviornment.
-3. If you want to use SFTP micro service to run on your kubernetes.
-4. If you dont know how to setup and share volume mount to your SFTP server.
+1. If you want to setup  an SFTP server on a Kubernetes and want to expose for pulling the logs or stats of other application logs/data.
+2. If you want to see which external load balancer best fit for your SFTP application for your Kubernetes environment.
+3. If you want to use SFTP micro service to run on your Kubernetes.
+4. If you don't know how to setup and share volume mount to your SFTP server.
  
 ## **This Section contains**
 
-1. Deploy a SFTP service on a kubernetes cluster  
+1. Deploy a SFTP service on a Kubernetes cluster  
 2. Citrix ADC as Ingress Device 
 3. Access the sftp application.
 4. Why Citrix ADC is better choice for exposing the SFTP service ?
 
 ## **Deploy SFTP micro service**
 
-As a first setp we are going to dploy the SFTP micro service on kubernetes. Please refer [here](/sftp.yaml) to see the SFTP application yaml.
-SFTP yaml contains service and deployment kinds which runs on namespace called ```sftp```. Service is exposed on port 22. Deployment section contains an ```arg``` field which is used for setting up username and password. We can even securly set password for SFTP container by using ```env PASSWORD```.
+As a first step we are going to deploy the SFTP micro service on Kubernetes. Please refer [here](/sftp.yaml) to see the SFTP application yaml.
+SFTP yaml contains service and deployment kinds which runs on namespace called ```sftp```. Service is exposed on port 22. Deployment section contains an ```arg``` field which is used for setting up username and password. We can even securely set password for SFTP container by using ```env PASSWORD```.
 
 ![](./images/VolumeMount.png)
 
-In this example, highlighed with yellow under host path refers to the volume in your host machine. Highlighed with red refers to the path in the SFTP container. We have to mount host volume to container ```/home/<username>``` location. In this example, in conatiner we use ```/home/admin``` as mount folder because we are using admin as username. 
+In this example, highlighted with yellow under host path refers to the volume in your host machine. Highlighted with red refers to the path in the SFTP container. We have to mount host volume to container ```/home/<username>``` location. In this example, in container we use ```/home/admin``` as mount folder because we are using admin as username. 
 
 
 1. Download the sftp yaml.
@@ -115,7 +115,7 @@ Once  its connected, we can transfer files between local host and server.
 
 1. Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided [here](https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md).
 2. Citrix ADC allows to distribute the traffic to right pod in the right Node which reduces the latency compared to other ADC.
-3. Citrix ADC allows to reach to the service IP (pod) irespective of which subnet your cluster and Citrix ADC runs. refer [here](https://github.com/citrix/citrix-k8s-node-controller)  
+3. Citrix ADC allows to reach to the service IP (pod) irrespective of which subnet your cluster and Citrix ADC runs. refer [here](https://github.com/citrix/citrix-k8s-node-controller)  
 
 
   
