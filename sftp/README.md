@@ -27,7 +27,7 @@ SFTP yaml contains service and deployment kinds which runs on namespace called `
 In this example, highlighed with yellow under host path refers to the volume in your host machine. Highlighed with red refers to the path in the SFTP container. We have to mount host volume to container ```/home/<username>``` location. In this example, in conatiner we use ```/home/admin``` as mount folder because we are using admin as username. 
 
 
-1. Download the sftp yaml using below command.
+1. Download the sftp yaml.
    ```
      wget https://raw.githubusercontent.com/janraj/Networking/master/sftp/sftp.yaml
    ```
@@ -49,9 +49,9 @@ In this example, highlighed with yellow under host path refers to the volume in 
    ``` 
       kubectl get pods -n sftp
    ```
-   ```
-    ![](./images/SftpService.png)
-   ```
+   
+   ![](./images/SftpService.png)
+  
 
 ## Use Citrix ADC to expose the SFTP service
 
@@ -86,21 +86,34 @@ Citrix ADC is being used here to route the traffic to the SFTP service.
 3. Verify configurations has been created on VPX.
 Login to Citrix ADC and check following configurations are created for SFTP applications or not.
    1. Check CS vserver configuration.
+
       ![](./images/csvserver.png)
+
    2. Check LB vserver configuration.
+
       ![](./images/lbvserver.png)
+
    3. Check Servicegroup configuration.
+
       ![](./images/servicegroup.png)
+
    4. Check Monitor configuration.   
+
       ![](./images/monitor.png)
     
 ## Access the SFTP application 
 
-   Use any of the following to connect to sftp application.
+Access the sftp application using the csvserver IP used in the ADC configuration. We can use curl, or FileZilla or any tools like that.
+   
+![](./images/SFTP_Connection.png)
+
+Once  its connected, we can transfer files between local host and server.
+   
 
 ## Why Citrix ADC is better choice for exposing the SFTP service.
 
-   It uses a user monitor and probes where the sftp service is avaialbel by pulling the files mentioned in the monitor.
+   Citrix ADC allows you to monitor your service at deep level by checking whether the file present in the service or not. This can be easily set using smart annotation provided here [https://github.com/citrix/citrix-k8s-ingress-controller/blob/master/docs/configure/annotations.md].
+ 
 
 
   
