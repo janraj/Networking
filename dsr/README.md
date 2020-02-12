@@ -25,24 +25,30 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 
 
 ## **Create a namespace  for DSR.**
-This creates a namespace called dsr.
+
+This creates a namespace called ```dsr```.
 
 ```
-kubectl apply -f dsr_namespace.yam
+kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
+```
+
+## **Create a Configmap.**
+
+```
+
 ```
 
 ## **Deploy Citrix CPX ingress controller.**
 
-1.Download the Citrix CPX Ingress controller. 
+Deploy Citrix ADC CPX on namespace ```dsr```.
 ```
-wget https://raw.githubusercontent.com/citrix/citrix-k8s-ingress-controller/master/deployment/baremetal/citrix-k8s-cpx-ingress.yml
+kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/citrix-k8s-cpx-ingress.yml -n dsr
 ```
-2. Edit the namespace.
-3. Edit the ingress class 
 
 ## **Deploy the Guestbook application.**
+
 ```
-kubectl apply -f 
+kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/guestbook-all-in-one.yaml -n dsr 
 ```
 ## **Expose the guestbook application using ingress.**
 ```
