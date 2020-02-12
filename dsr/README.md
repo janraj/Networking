@@ -24,6 +24,13 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 1. Who wants DSR solution for Kubernetes platform.
 
 
+## **Create a namespace  for DSR.**
+This creates a namespace called dsr.
+
+```
+kubectl apply -f dsr_namespace.yam
+```
+
 ## **Deploy Citrix CPX ingress controller.**
 
 1.Download the Citrix CPX Ingress controller. 
@@ -35,10 +42,11 @@ wget https://raw.githubusercontent.com/citrix/citrix-k8s-ingress-controller/mast
 
 ## **Deploy the Guestbook application.**
 ```
-
+kubectl apply -f 
 ```
 ## **Expose the guestbook application using ingress.**
 ```
+kubectl apply -f
 ```
 
 
