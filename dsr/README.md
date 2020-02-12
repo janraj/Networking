@@ -35,7 +35,7 @@ kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/
 ## **Create a Configmap.**
 
 ```
-
+kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/cpx_config.yaml -n dsr
 ```
 
 ## **Deploy Citrix CPX ingress controller.**
