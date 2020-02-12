@@ -24,7 +24,8 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 1. Who wants DSR solution for Kubernetes platform.
 
 
-## **Create a namespace  for DSR.**
+## **Tier-2 Configurations.**
+### **Create a namespace  for DSR.**
 
 This creates a namespace called ```dsr```.
 
@@ -32,27 +33,35 @@ This creates a namespace called ```dsr```.
 kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
 ```
 
-## **Create a Configmap.**
+### **Create a Configmap.**
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/cpx_config.yaml -n dsr
 ```
 
-## **Deploy Citrix CPX ingress controller.**
+### **Deploy Citrix CPX ingress controller.**
 
 Deploy Citrix ADC CPX on namespace ```dsr```.
 ```
 kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/citrix-k8s-cpx-ingress.yml -n dsr
 ```
 
-## **Deploy the Guestbook application.**
+## **Deploying Application on Kubernetes Cluster**
+
+### **Deploy the Guestbook application.**
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/guestbook-all-in-one.yaml -n dsr 
 ```
-## **Expose the guestbook application using ingress.**
+### **Expose the guestbook application using ingress.**
+
+Download the guestbook ingress yaml.
 ```
-kubectl apply -f
+wget https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/guestbook-ingress.yaml
+```
+provide the DSR IP/Public IP through which user access your application via ```ingress.citrix.com/frontend-ip:``` annotations.
+```
+kubectl apply -f guestbook-ingress.yaml -n dsr
 ```
 
 
