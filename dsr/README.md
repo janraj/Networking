@@ -21,7 +21,26 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 
 ## **Who should read this?**
 
-1. Looking for a DSR solution for Kubernetes.
+1. Who wants DSR solution for Kubernetes platform.
+
+
+## **Deploy Citrix CPX ingress controller.**
+
+1.Download the Citrix CPX Ingress controller. 
+```
+wget https://raw.githubusercontent.com/citrix/citrix-k8s-ingress-controller/master/deployment/baremetal/citrix-k8s-cpx-ingress.yml
+```
+2. Edit the namespace.
+3. Edit the ingress class 
+
+## **Deploy the Guestbook application.**
+```
+
+```
+## **Expose the guestbook application using ingress.**
+```
+```
+
 
  
 
