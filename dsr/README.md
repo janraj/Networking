@@ -25,7 +25,7 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 
 
 ## **1. Tier-2 Configurations.**
-### **Create a namespace  for DSR.**
+### **1.1. Create a namespace  for DSR.**
 
 This creates a namespace called ```dsr```.
 
@@ -33,13 +33,13 @@ This creates a namespace called ```dsr```.
 kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
 ```
 
-### **Create a Configmap.**
+### **1.2. Create a Configmap.**
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/cpx_config.yaml -n dsr
 ```
 
-### **Deploy Citrix CPX ingress controller.**
+### **1.3. Deploy Citrix CPX ingress controller.**
 
 Deploy Citrix ADC CPX on namespace ```dsr```.
 ```
@@ -48,12 +48,12 @@ kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/
 
 ## **2. Deploying Application on Kubernetes Cluster**
 
-### **Deploy the Guestbook application.**
+### **2.1. Deploy the Guestbook application.**
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/guestbook-all-in-one.yaml -n dsr 
 ```
-### **Expose the guestbook application using ingress.**
+### **2.2. Expose the guestbook application using ingress.**
 
 Download the guestbook ingress yaml.
 ```
