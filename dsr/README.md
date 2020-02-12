@@ -24,7 +24,7 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 1. Who wants DSR solution for Kubernetes platform.
 
 
-## **Tier-2 Configurations.**
+## **1. Tier-2 Configurations.**
 ### **Create a namespace  for DSR.**
 
 This creates a namespace called ```dsr```.
@@ -46,7 +46,7 @@ Deploy Citrix ADC CPX on namespace ```dsr```.
 kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/citrix-k8s-cpx-ingress.yml -n dsr
 ```
 
-## **Deploying Application on Kubernetes Cluster**
+## **2. Deploying Application on Kubernetes Cluster**
 
 ### **Deploy the Guestbook application.**
 
