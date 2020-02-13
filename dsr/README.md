@@ -26,7 +26,6 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 ## **DSR Network Topology and Traffic Flow**
 
 There is an external Load balancer which distributes the traffic to the Ingress controller on the kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet , decapsulat it and does actual load balancing amoung service. When return traffic comes from service which will be directly send to the client instead of via ADC.
- 
 ![](./images/DSR_Traffic_FLow.png)
 
 
@@ -72,7 +71,7 @@ There is an external Load balancer which distributes the traffic to the Ingress 
 
 ## **3. Tier-1 Configurations**
 
-	As of now there is no automated configurations avaialbel for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
+   As of now there is no automated configurations avaialbel for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
 
 - ### Configure Virtual Server on ADC.
 
@@ -81,7 +80,7 @@ There is an external Load balancer which distributes the traffic to the Ingress 
 	```
 	add lb vserver v1 any ******  80 -m iptUNNEL
 	add service s1 <cpx-pod-ip> any 80 -usip on
-        bind lb vserver v1 s1
+	bind lb vserver v1 s1
 	```
 
 ## **4. Establish Network connectivity between Tier-1 and Tier-2**
