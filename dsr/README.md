@@ -25,45 +25,60 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 
 
 ## **1. Tier-2 Configurations.**
-### **1.1. Create a namespace  for DSR.**
+- ### **Create a namespace  for DSR.**
 
-This creates a namespace called ```dsr```.
+      This creates a namespace called ```dsr```.
 
-```
-kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
-```
+      ```
+      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
+      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
+      ```
 
-### **1.2. Create a Configmap.**
+- ### **Create a Configmap.**
 
-```
-kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/cpx_config.yaml -n dsr
-```
+      ```
+      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/cpx_config.yaml -n dsr
+      ```
 
-### **1.3. Deploy Citrix CPX ingress controller.**
+- ### **Deploy Citrix CPX ingress controller.**
 
-Deploy Citrix ADC CPX on namespace ```dsr```.
-```
-kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/citrix-k8s-cpx-ingress.yml -n dsr
-```
+      Deploy Citrix ADC CPX on namespace ```dsr```.
+      ```
+      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/citrix-k8s-cpx-ingress.yml -n dsr
+      ```
 
 ## **2. Deploying Application on Kubernetes Cluster**
 
-### **2.1. Deploy the Guestbook application.**
+- ### **Deploy the Guestbook application.**
+
+      ```
+      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/guestbook-all-in-one.yaml -n dsr 
+      ```
+- ### **Expose the guestbook application using ingress.**
+
+      Download the guestbook ingress yaml.
+      ```
+      wget https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/guestbook-ingress.yaml
+      ```
+      provide the DSR IP/Public IP through which user access your application via ```ingress.citrix.com/frontend-ip:``` annotations.
+      ```
+      kubectl apply -f guestbook-ingress.yaml -n dsr
+      ```
+## **3. Tier-1 Configurations**
+As of now there is no automated configurations avaialbel for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
+
+- ### Configure Virtual Server on ADC.
+
+       Use Virtual Server IP as same as the public IP used in ```ingress.citrix.com/frontend-ip:```. 
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/guestbook-all-in-one.yaml -n dsr 
-```
-### **2.2. Expose the guestbook application using ingress.**
-
-Download the guestbook ingress yaml.
-```
-wget https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/guestbook-ingress.yaml
-```
-provide the DSR IP/Public IP through which user access your application via ```ingress.citrix.com/frontend-ip:``` annotations.
-```
-kubectl apply -f guestbook-ingress.yaml -n dsr
+	add lb vserver v1 any ******  80 -m iptUNNEL
+	add service s1 <cpx-pod-ip> any 80 -usip on
+        bind lb vserver v1 s1
 ```
 
-
+## **4. Establish Network connectivity between Tier-1 and Tier-2**
  
+Use CNC here.
+
 
