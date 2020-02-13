@@ -29,6 +29,7 @@ There is an external Load balancer which distributes the traffic to the Ingress 
  
 ![](./images/DSR_Traffic_FLow.png)
 
+
 ## **1. Tier-2 Configurations.**
 - ### **Create a namespace  for DSR.**
 
@@ -71,7 +72,7 @@ There is an external Load balancer which distributes the traffic to the Ingress 
 
 ## **3. Tier-1 Configurations**
 
-As of now there is no automated configurations avaialbel for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
+	As of now there is no automated configurations avaialbel for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
 
 - ### Configure Virtual Server on ADC.
 
