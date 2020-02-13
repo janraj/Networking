@@ -27,25 +27,24 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 ## **1. Tier-2 Configurations.**
 - ### **Create a namespace  for DSR.**
 
-      This creates a namespace called ```dsr```.
+	This creates a namespace called ```dsr```.
 
-      ```
-      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
-      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
-      ```
+	```
+	kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/dsr_namespace.yaml
+	```
 
 - ### **Create a Configmap.**
 
-      ```
-      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/cpx_config.yaml -n dsr
-      ```
+	```
+	kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/cpx_config.yaml -n dsr
+	```
 
 - ### **Deploy Citrix CPX ingress controller.**
 
-      Deploy Citrix ADC CPX on namespace ```dsr```.
-      ```
-      kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/citrix-k8s-cpx-ingress.yml -n dsr
-      ```
+	Deploy Citrix ADC CPX on namespace ```dsr```.
+	```
+	kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/citrix-k8s-cpx-ingress.yml -n dsr
+	```
 
 ## **2. Deploying Application on Kubernetes Cluster**
 
