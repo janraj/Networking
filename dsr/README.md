@@ -3,7 +3,7 @@
 2. [When use DSR architecture?](#when)
 3. [Who should read this?](#who)
 4. [DSR Network Topology and Traffic flow](#topology)
-5. [DSR Network Topology and Traffic flow](#topology)
+5. [DSR Configuration for cloud native apps using Citrix ADC](#conf)
 	1. [Tier-2 Configurations](#ingress)
 	2. [Deploying Application on Kubernetes Cluster](#application)
 	3. [Establish Network connectivity between Tier-1 and Tier-2](#cnc)
@@ -130,7 +130,18 @@ This section helps to create configurations required on Ingress device for DSR t
 Access the application from a browser using the IP given for ```ingress.citrix.com/frontend-ip:```. A guestbook page will be populated. 
 
 
+<a name="misc"></a>
+# Misc
+When you test the application, there might be a case, it wont populate any pages, even though all required configurations are created. This is because few settings and ip table rules are configured on the Host. If you face any such case, please enable the following on all the Hosts.
+```
+sysctl -w net.ipv4.conf.all.rp_filter=0
+sysctl -w net.ipv4.conf.cni0.rp_filter=0
+sysctl -w net.ipv4.conf.eth0.rp_filter=0
+sysctl -w net.ipv4.conf.cni0.rp_filter=0
+sysctl -w net.ipv4.conf.default.rp_filter=0
 
-
+iptables -t nat -I POSTROUTING -s <frontend-ip>  -o eth0 -j MASQUERADE  
+iptables -I FORWARD -i cni0 -o eth0 -j ACCEPT
+```
 
 
