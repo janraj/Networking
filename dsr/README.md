@@ -1,4 +1,10 @@
-# **DSR**
+# Table of contents
+1. [Introduction](#introduction)
+2. [When use DSR architecture?](#when_use_dsr_architecture)
+3. [Who shoulw read this?](#who_should_read_this)
+4. [DSR Network Topology and Traffic flow](#dsr_network_topology_and_traffic_flow)
+
+# **Introduction**
 DSR is an implementation of asymmetric network load distribution in load balanced systems, meaning that the request and response traffic use a different network path.
 The use of different network paths helps avoid extra hops and reduces the latency by which not only speeds up the response time between the client and the service but also removes some extra load from the load balancer. Using DSR is a transparent way to achieve increased network performance for your applications with little to no infrastructure changes.
 
@@ -13,7 +19,7 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 
 1. No layer 7 advanced features are available
 
-## **When use this architecture?**
+## **When use DSR architecture?**
 
 1. Where response time matters. Example, video streaming.
 2. Where no intelligence is required
@@ -25,7 +31,7 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 
 ## **DSR Network Topology and Traffic Flow**
 
-There is an external Load balancer which distributes the traffic to the Ingress controller on the kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet , decapsulat it and does actual load balancing amoung service. When return traffic comes from service which will be directly send to the client instead of via ADC.
+There is an external Load balancer which distributes the traffic to the ingress controller on the kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet ,decapsulate the packet and does load balancing among the services. When return traffic comes from service which will be directly send to the client instead of via ADC.
 ![](./images/DSR_Traffic_FLow.png)
 
 
