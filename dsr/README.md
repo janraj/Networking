@@ -1,9 +1,9 @@
 # Table of contents
 1. [Introduction](#introduction)
-2. [When use DSR architecture?](#when)
+2. [When to use DSR architecture?](#when)
 3. [Who should read this?](#who)
 4. [DSR Network Topology and Traffic flow](#topology)
-5. [DSR Configuration for cloud native apps using Citrix ADC](#conf)
+5. [DSR Configuration for cloud-native apps using Citrix ADC](#conf)
 	1. [Tier-2 Configurations](#ingress)
 	2. [Deploying Application on Kubernetes Cluster](#application)
 	3. [Establish Network connectivity between Tier-1 and Tier-2](#cnc)
@@ -12,7 +12,7 @@
 6. [Misc](#misc)
 
 # **Introduction**
-DSR is an implementation of asymmetric network load distribution in load balanced systems, meaning that the request and response traffic use a different network path.
+DSR is an implementation of asymmetric network load distribution in load-balanced systems, meaning that the request and response traffic uses a different network path.
 The use of different network paths helps avoid extra hops and reduces the latency by which not only speeds up the response time between the client and the service but also removes some extra load from the load balancer. Using DSR is a transparent way to achieve increased network performance for your applications with little to no infrastructure changes.
 
 Some of the pros and cons of DSR mode of topologies are,
@@ -33,17 +33,17 @@ Some of the pros and cons of DSR mode of topologies are,
 
 1. Where response time matters. Example, video streaming.
 2. Where no intelligence is required
-3. When output capacity of the load-balancer could be the bottleneck
+3. When the output capacity of the load-balancer could be the bottleneck
 
 <a name="who"></a>
 # **Who should read this?**
 
-1. Who wants DSR solution for Kubernetes platform.
+1. Who wants the DSR solution for the Kubernetes platform.
 
 <a name="topology"></a>
 # **DSR Network Topology and Traffic Flow**
 
-There is an external Load balancer which distributes the traffic to the ingress controller on the Kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet ,decapsulate the packet and does load balancing among the services. When return traffic comes from service which will be directly send to the client instead of via ADC.
+There is an external load-balancer that distributes the traffic to the ingress controller on the Kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet, decapsulate the packet and does load balancing among the services. When return traffic comes from service which will be directly sent to the client instead of via ADC.
 ![](./images/DSR_Traffic_FLow.png)
 
 <a name="conf"></a>
@@ -54,7 +54,7 @@ This section provides step by step guide to deploy the Application for Direct Se
 <a name="ingress"></a>
 ## **1. Tier-2 Configurations.**
 
-This section helps to create configurations required on Ingress device for DSR topology.
+This section helps to create configurations required on the ingress device for DSR topology.
 
 - ### **Create a namespace  for DSR.**
 
@@ -113,7 +113,7 @@ This section helps to create configurations required on Ingress device for DSR t
 <a name="adc"></a>
 ## **4. Tier-1 Configurations**
 
-   As of now there is no automated configurations available for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
+   As of now, there are no automated configurations available for Tier-1 ADC. We have to make a static configurations on Tier-1 ADC.
 
 - ### Configure Virtual Server on ADC.
 
@@ -132,7 +132,7 @@ Access the application from a browser using the IP given for ```ingress.citrix.c
 
 <a name="misc"></a>
 # Misc
-When you test the application, there might be a case, it wont populate any pages, even though all required configurations are created. This is because few settings and ip table rules are configured on the Host. If you face any such case, please enable the following on all the Hosts.
+When you test the application, there might be a case, it would not populate any pages, even though all required configurations are created. This is because few settings and IP table rules are configured on the Host. If you face any such case, please enable the following on all the Hosts.
 ```
 sysctl -w net.ipv4.conf.all.rp_filter=0
 sysctl -w net.ipv4.conf.cni0.rp_filter=0
