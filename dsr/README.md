@@ -23,6 +23,11 @@ The use of different network paths helps avoid extra hops and reduces the latenc
 
 1. Who wants DSR solution for Kubernetes platform.
 
+## **DSR Network Topology and Traffic Flow**
+
+There is an external Load balancer which distributes the traffic to the Ingress controller on the kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet , decapsulat it and does actual load balancing amoung service. When return traffic comes from service which will be directly send to the client instead of via ADC.
+ 
+![](./images/DSR_Traffic_FLow.png)
 
 ## **1. Tier-2 Configurations.**
 - ### **Create a namespace  for DSR.**
