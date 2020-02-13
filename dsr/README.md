@@ -1,12 +1,15 @@
 # Table of contents
 1. [Introduction](#introduction)
 2. [When use DSR architecture?](#when)
-3. [Who shoulw read this?](#who)
+3. [Who should read this?](#who)
 4. [DSR Network Topology and Traffic flow](#topology)
-5. [Tier-2 Configurations](#ingress)
-6. [Deploying Application on Kubernetes Cluster](#application)
-7. [Establish Network connectivity between Tier-1 and Tier-2](#cnc)
-8. [Tier-1 Configurations](#adc)
+5. [DSR Network Topology and Traffic flow](#topology)
+	1. [Tier-2 Configurations](#ingress)
+	2. [Deploying Application on Kubernetes Cluster](#application)
+	3. [Establish Network connectivity between Tier-1 and Tier-2](#cnc)
+	4. [Tier-1 Configurations](#adc)
+	5. [Test the Deployment](#test)
+6. [Misc](#misc)
 
 # **Introduction**
 DSR is an implementation of asymmetric network load distribution in load balanced systems, meaning that the request and response traffic use a different network path.
@@ -17,8 +20,8 @@ Some of the pros and cons of DSR mode of topologies are,
 **Pros**
 
 1. Very fast load-balancing mode
-2. Load-balancer network bandwith is not a bottleneck anymore
-3. Total output bandwith is the sum of each backend bandwith
+2. Load-balancer network bandwidth is not a bottleneck anymore
+3. Total output bandwidth is the sum of each backend bandwidth
 4. Less intrusive than the layer 4 load-balancing NAT mode
 
 **Cons**
@@ -26,22 +29,27 @@ Some of the pros and cons of DSR mode of topologies are,
 1. No layer 7 advanced features are available
 
 <a name="when"></a>
-## **When use DSR architecture?**
+# **When use DSR architecture?**
 
 1. Where response time matters. Example, video streaming.
 2. Where no intelligence is required
 3. When output capacity of the load-balancer could be the bottleneck
 
 <a name="who"></a>
-## **Who should read this?**
+# **Who should read this?**
 
 1. Who wants DSR solution for Kubernetes platform.
 
 <a name="topology"></a>
-## **DSR Network Topology and Traffic Flow**
+# **DSR Network Topology and Traffic Flow**
 
-There is an external Load balancer which distributes the traffic to the ingress controller on the kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet ,decapsulate the packet and does load balancing among the services. When return traffic comes from service which will be directly send to the client instead of via ADC.
+There is an external Load balancer which distributes the traffic to the ingress controller on the Kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet ,decapsulate the packet and does load balancing among the services. When return traffic comes from service which will be directly send to the client instead of via ADC.
 ![](./images/DSR_Traffic_FLow.png)
+
+<a name="conf"></a>
+# **DSR Configuration for cloud native apps using Citrix ADC**
+
+This section provides step by step guide to deploy the Application for Direct Server Return using Citrix ADC.
 
 <a name="ingress"></a>
 ## **1. Tier-2 Configurations.**
@@ -96,7 +104,7 @@ This section helps to create configurations required on Ingress device for DSR t
 	wget https://raw.githubusercontent.com/citrix/citrix-k8s-node-controller/master/deploy/citrix-k8s-node-controller.yaml
 	```
 - ## **Provide Input for CNC**
-	Provid NS_IP, USERNAME, PASSOWRD and REMOTE_VTEP IP arguments. Please refer [here](https://github.com/citrix/citrix-k8s-node-controller) for more detailed information.
+	Provide NS_IP, NS_USER, NS_PASSWORD and REMOTE_VTEPIP arguments. Please refer [here](https://github.com/citrix/citrix-k8s-node-controller) for more detailed information.
 - ## **Deploy the CNC**
 	```
            kubectl create -f citrix-k8s-node-controller.yaml -n dsr
@@ -105,7 +113,7 @@ This section helps to create configurations required on Ingress device for DSR t
 <a name="adc"></a>
 ## **4. Tier-1 Configurations**
 
-   As of now there is no automated configurations avaialbel for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
+   As of now there is no automated configurations available for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
 
 - ### Configure Virtual Server on ADC.
 
@@ -116,6 +124,13 @@ This section helps to create configurations required on Ingress device for DSR t
 	add service s1 <cpx-pod-ip> any 80 -usip on
 	bind lb vserver v1 s1
 	```
+
+<a name="test"></a>
+## **5. Test the Deployment**
+Access the application from a browser using the IP given for ```ingress.citrix.com/frontend-ip:```. A guestbook page will be populated. 
+
+
+
 
 
 
