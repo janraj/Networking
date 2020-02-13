@@ -3,6 +3,10 @@
 2. [When use DSR architecture?](#when)
 3. [Who shoulw read this?](#who)
 4. [DSR Network Topology and Traffic flow](#topology)
+5. [Tier-2 Configurations](#ingress)
+6. [Deploying Application on Kubernetes Cluster](#application)
+7. [Establish Network connectivity between Tier-1 and Tier-2](#cnc)
+8. [Tier-1 Configurations](#adc)
 
 # **Introduction**
 DSR is an implementation of asymmetric network load distribution in load balanced systems, meaning that the request and response traffic use a different network path.
@@ -39,8 +43,11 @@ Some of the pros and cons of DSR mode of topologies are,
 There is an external Load balancer which distributes the traffic to the ingress controller on the kubernetes via an overlay (L3 DSR IPIP). Ingress controller picks up the packet ,decapsulate the packet and does load balancing among the services. When return traffic comes from service which will be directly send to the client instead of via ADC.
 ![](./images/DSR_Traffic_FLow.png)
 
-
+<a name="ingress"></a>
 ## **1. Tier-2 Configurations.**
+
+This section helps to create configurations required on Ingress device for DSR topology.
+
 - ### **Create a namespace  for DSR.**
 
 	This creates a namespace called ```dsr```.
@@ -62,6 +69,7 @@ There is an external Load balancer which distributes the traffic to the ingress 
 	kubectl apply -f https://raw.githubusercontent.com/janraj/Networking/master/dsr/KubernetesConfig/citrix-k8s-cpx-ingress.yml -n dsr
 	```
 
+<a name="application"></a>
 ## **2. Deploying Application on Kubernetes Cluster**
 
 - ### **Deploy the Guestbook application.**
@@ -80,7 +88,22 @@ There is an external Load balancer which distributes the traffic to the ingress 
      	kubectl apply -f guestbook-ingress.yaml -n dsr
 	```
 
-## **3. Tier-1 Configurations**
+<a name="cnc"></a>
+## **3. Establish Network connectivity between Tier-1 and Tier-2**
+
+- ## **Download the CNC yaml**
+	```
+	wget https://raw.githubusercontent.com/citrix/citrix-k8s-node-controller/master/deploy/citrix-k8s-node-controller.yaml
+	```
+- ## **Provide Input for CNC**
+	Provid NS_IP, USERNAME, PASSOWRD and REMOTE_VTEP IP arguments. Please refer [here](https://github.com/citrix/citrix-k8s-node-controller) for more detailed information.
+- ## **Deploy the CNC**
+	```
+           kubectl create -f citrix-k8s-node-controller.yaml -n dsr
+	```
+
+<a name="adc"></a>
+## **4. Tier-1 Configurations**
 
    As of now there is no automated configurations avaialbel for Tier-1 ADC. We have to make one time static configurations on Tier-1 ADC.
 
@@ -94,8 +117,5 @@ There is an external Load balancer which distributes the traffic to the ingress 
 	bind lb vserver v1 s1
 	```
 
-## **4. Establish Network connectivity between Tier-1 and Tier-2**
- 
-Use CNC here.
 
 
