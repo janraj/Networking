@@ -132,7 +132,7 @@ Access the application from a browser using the IP given for ```ingress.citrix.c
 
 <a name="misc"></a>
 # Misc
-When you test the application, there might be a case, it would not populate any pages, even though all required configurations are created. This is because few settings and IP table rules are configured on the Host. If you face any such case, please enable the following on all the Hosts.
+When you test the application, it might not populate any pages, even though all required configurations are created. This is because of ```rp_filter``` rules on the host. If you face any such issue, please enable the following on all the hosts.
 ```
 sysctl -w net.ipv4.conf.all.rp_filter=0
 sysctl -w net.ipv4.conf.cni0.rp_filter=0
