@@ -127,8 +127,9 @@ This section helps to create configurations required on the ingress device for D
 
 <a name="test"></a>
 ## **5. Test the Deployment**
-Access the application from a browser using the IP given for ```ingress.citrix.com/frontend-ip:```. A guestbook page will be populated. 
+Access the application from a browser using the IP given for ```ingress.citrix.com/frontend-ip:```. A guestbook page will be populated. Sample output is given below. 
 
+[](./images/ApplicationOutput.png)
 
 <a name="misc"></a>
 # Misc
@@ -139,9 +140,6 @@ sysctl -w net.ipv4.conf.cni0.rp_filter=0
 sysctl -w net.ipv4.conf.eth0.rp_filter=0
 sysctl -w net.ipv4.conf.cni0.rp_filter=0
 sysctl -w net.ipv4.conf.default.rp_filter=0
-
-iptables -t nat -I POSTROUTING -s <frontend-ip>  -o eth0 -j MASQUERADE  
-iptables -I FORWARD -i cni0 -o eth0 -j ACCEPT
 ```
 
 
