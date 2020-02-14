@@ -128,8 +128,7 @@ This section helps to create configurations required on the ingress device for D
 <a name="test"></a>
 ## **5. Test the Deployment**
 Access the application from a browser using the IP given for ```ingress.citrix.com/frontend-ip:```. A guestbook page will be populated. Sample output is given below. 
-
-[](./images/ApplicationOutput.png)
+![](./images/ApplicationOutput.png)
 
 <a name="misc"></a>
 # Misc
