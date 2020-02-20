@@ -12,7 +12,7 @@
 6. [Misc](#misc)
 
 # **Introduction**
-DSR is an implementation of asymmetric network load distribution in load-balanced systems, meaning that the request and response traffic uses a different network path.
+DSR is a method  of asymmetric network load distribution in load-balanced systems, where request and response have different network paths.
 The use of different network paths helps avoid extra hops and reduces the latency by which not only speeds up the response time between the client and the service but also removes some extra load from the load balancer. Using DSR is a transparent way to achieve increased network performance for your applications with little to no infrastructure changes.
 
 Some of the pros and cons of DSR mode of topologies are,
@@ -99,13 +99,13 @@ This section helps to create configurations required on the ingress device for D
 <a name="cnc"></a>
 ## **3. Establish Network connectivity between Tier-1 and Tier-2**
 
-- ## **Download the CNC yaml**
+- ## **Download the CitrixNodeController yaml**
 	```
 	wget https://raw.githubusercontent.com/citrix/citrix-k8s-node-controller/master/deploy/citrix-k8s-node-controller.yaml
 	```
-- ## **Provide Input for CNC**
+- ## **Provide Input for CitrixNodeController**
 	Provide NS_IP, NS_USER, NS_PASSWORD and REMOTE_VTEPIP arguments. Please refer [here](https://github.com/citrix/citrix-k8s-node-controller) for more detailed information.
-- ## **Deploy the CNC**
+- ## **Deploy the CitrixNodeController**
 	```
            kubectl create -f citrix-k8s-node-controller.yaml -n dsr
 	```
